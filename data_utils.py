@@ -24,6 +24,17 @@ def create_lags(df: pd.DataFrame, lags: int) -> np.ndarray:
 
 df_pickup_lags = create_lags(df, lags)
 
+def get_event_data(split: str, events: np.ndarray) -> np.ndarray:
+    split_ranges = {
+        "train": (0, 0.7),
+        "val": (0.7, 0.8),
+        "test": (0.8, 1.0)
+    }
+    start, end = split_ranges[split]
+    start_idx = int(start * events.shape[0])
+    end_idx = int(end * events.shape[0])
+    return events[start_idx:end_idx-1]
+
 
 def load_data(pickup_zone, lags=1, split="train", date_time=False, event_info=False):
     assert split in ["train", "test", "val"], "split should be one of train, test and val"
