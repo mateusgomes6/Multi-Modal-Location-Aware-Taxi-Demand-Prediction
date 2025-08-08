@@ -92,4 +92,14 @@ def compute_error(trues, predicted):
 
 
 if __name__ == '__main__':
-    load_data(p_zones[0], lags=5)
+    try:
+        sample_data, sample_target = load_data(
+            pickup_zone=p_zones[0],
+            lags=5,
+            split="train",
+            date_time=True,
+            event_info=False
+        )
+        print(f"Sucessfully. Shape: {sample_data['pickup_lags'].shape}")
+    except Exception as e:
+        print(f"Error: {str(e)}")
