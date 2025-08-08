@@ -16,6 +16,14 @@ def str2bool(v: str):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
+def create_lags(df: pd.DataFrame, lags: int) -> np.ndarray:
+    lag_data = np.zeros((len(df), lags))
+    for i in range(lags):
+        lag_data[:, i] = df["pickup_no"].shift(lags - 1 - i).fillna(0)
+    return lag_data[:-1]
+
+df_pickup_lags = create_lags(df, lags)
+
 
 def load_data(pickup_zone, lags=1, split="train", date_time=False, event_info=False):
     assert split in ["train", "test", "val"], "split should be one of train, test and val"
