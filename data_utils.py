@@ -1,12 +1,14 @@
 import argparse
 from collections import OrderedDict, defaultdict
 from os.path import join, isfile
-
+import logging
 import numpy as np
 import pandas as pd
 
 from config import p_zones, processed_taxi_data_root, encoder, pzone_encoder
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def str2bool(v: str):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
